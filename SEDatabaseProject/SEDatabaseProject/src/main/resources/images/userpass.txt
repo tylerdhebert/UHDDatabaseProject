@@ -1,0 +1,27 @@
+admin admin
+10001 password
+00002 password
+00003 password
+00004 password
+00005 password
+00006 password
+00007 password
+00008 password
+10009 password
+00010 password
+00011 password
+00012 password
+00013 password
+00014 password
+00015 password
+00016 password
+10007 password
+00018 password
+00019 password
+00020 password
+10021 password
+00022 password
+00023 password
+00024 password
+10025 password
+
