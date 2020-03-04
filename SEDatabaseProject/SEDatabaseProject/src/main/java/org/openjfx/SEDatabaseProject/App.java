@@ -38,6 +38,9 @@ public class App extends Application {
         return fxmlLoader.load();
     }
     
+    /*
+     * Creates database screen.
+     */
     public static void showDatabaseScreen() throws IOException{
     	FXMLLoader fxmlLoader = new FXMLLoader();
     	fxmlLoader.setLocation(App.class.getResource("secondary.fxml"));
@@ -54,6 +57,9 @@ public class App extends Application {
     	databaseEditorStage.show();
     }
     
+    /*
+     * Creates login screen. Called when logout button is pressed from database screen.
+     */
     public static void showLoginScreen() throws IOException{
     	FXMLLoader fxmlLoader = new FXMLLoader();
     	fxmlLoader.setLocation(App.class.getResource("primary.fxml"));
