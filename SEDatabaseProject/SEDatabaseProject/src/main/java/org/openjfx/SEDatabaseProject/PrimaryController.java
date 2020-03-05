@@ -17,6 +17,10 @@ import javafx.util.Duration;
 
 public class PrimaryController {
 	
+	/*
+	 * Fade out of "Login successful!" text.
+	 * TODO: Have login screen stall until fade out is complete.
+	 */
 	FadeTransition ft = new FadeTransition(Duration.millis(2000));
 	private final String FILENAME = "src\\main\\resources\\images\\userpass.txt";
 	
@@ -35,12 +39,21 @@ public class PrimaryController {
 	@FXML
 	Label failText = new Label();
 	
+	/**
+	 * Verifies login information against username/password file.
+	 * 
+	 * @param username Username field input
+	 * @param password Password field input
+	 * @return true if combination is found, false otherwise
+	 * @throws FileNotFoundException if text file containing login info is missing
+	 */
 	private Boolean loginVerification(String username, String password) throws FileNotFoundException
 	{
 		String currentLine[] = new String[2];
 		Arrays.fill(currentLine, " ");
 		Scanner txtReader = new Scanner(new File(FILENAME));
 		String line;
+		//Search text file line by line for combination.
 		while(txtReader.hasNext())
 		{
 			line = txtReader.nextLine();
@@ -51,8 +64,14 @@ public class PrimaryController {
 		return false;
 	}
 	
+	/**
+	 * Calls loginVerification. Displays success or fail text.
+	 * 
+	 * @param e
+	 * @throws IOException
+	 */
 	@FXML
-	private void loginPressed(ActionEvent e) throws IOException, InterruptedException
+	private void loginPressed(ActionEvent e) throws IOException
 	{
 		if (loginVerification(usernameField.getText(), passwordField.getText()))
 		{
@@ -61,6 +80,7 @@ public class PrimaryController {
 			ft.play();
 			App.username = usernameField.getText();
 			App.password = passwordField.getText();
+			//Calling database screen.
 			switchToSecondary();
 		}
 		else
@@ -70,6 +90,9 @@ public class PrimaryController {
 		}
 	}
 	
+	/**
+	 * Initializing nodes.
+	 */
 	public void initialize() {
     	ft.setNode(successText);
     	ft.setFromValue(1.0);
@@ -78,6 +101,10 @@ public class PrimaryController {
     	ft.setAutoReverse(false);
     }
 
+	/**
+	 * Calling database screen. Hides login screen.
+	 * @throws IOException
+	 */
     @FXML
     private void switchToSecondary() throws IOException {
     	usernameField.getScene().getWindow().hide();

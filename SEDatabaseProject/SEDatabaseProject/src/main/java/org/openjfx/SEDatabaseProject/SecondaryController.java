@@ -23,8 +23,11 @@ import javafx.scene.layout.AnchorPane;
 
 public class SecondaryController {
 	
+	//List of students
 	private final String FILENAME = "src\\main\\resources\\images\\peopleList.txt";
+	//Holds currently searched student
 	private String currentPersonName;
+	//Used for setting label for faculty or student. When true, MouseEvent for label stops occurring. 
 	private Boolean labelSet = false;
 	@FXML
 	TextField courseOne = new TextField();
@@ -115,6 +118,10 @@ public class SecondaryController {
 	@FXML 
 	Hyperlink logoutButton = new Hyperlink();
 	
+	/**
+	 * Sets LOGGED IN AS: text.
+	 * @param e
+	 */
 	@FXML
 	private void setLoggedInAsLabel(MouseEvent e)
 	{
@@ -135,15 +142,22 @@ public class SecondaryController {
 		}
 	}
 	
-	
+	/**
+	 * Verifies if input is an ID. If ID is valid, or if input is a name and matches a name in 
+	 * the text file, fills fields with information.
+	 * @param e
+	 * @throws IOException
+	 */
 	@FXML
 	private void fillFields(ActionEvent e) throws IOException
 	{
 		String desiredID = searchBox.getText();
 		Scanner txtReader = new Scanner(new File(FILENAME));
+		//Holds list of student's classes.
 		ArrayList<String> classList = new ArrayList();
 		Boolean isID;
 		
+		//Checking whether input is numerical.
 		try
 		{
 			Integer.parseInt(desiredID);
@@ -153,21 +167,27 @@ public class SecondaryController {
 			isID = false;
 		}
 		
+		//Preparing to search each line of student list.
 		String line = null;
 		String[] currentLine = new String[7];
 		Arrays.fill(currentLine, " ");
 		
+		//Searching each line of student list. 
 		while(txtReader.hasNext())
 		{
 			line = txtReader.nextLine();
+			//Parsing each line into a String array, splitting at slashes or periods.
 			currentLine = line.split("-|\\.");
 			
+			//Breaking from loop if ID matches.
 			if(currentLine[0].compareTo(desiredID) == 0 && isID)
 				break;
 			
+			//if input is non-numerical, breaking if name matches.
 			if(currentLine[1].toLowerCase().compareTo(desiredID.toLowerCase()) == 0 && !isID)
 				break;
 			
+			//if EOF and no ID match, fill INVALID
 			if(!txtReader.hasNext() && currentLine[0].compareTo(desiredID) != 0 && isID)
 			{
 				searchBox.setText("INVALID ID OR NAME");
@@ -203,6 +223,7 @@ public class SecondaryController {
 				return;
 			}
 			
+			//if EOF and no name match, fill INVALID
 			if(!txtReader.hasNext() && currentLine[1].toLowerCase().compareTo(desiredID.toLowerCase()) != 0 && !isID)
 			{
 				searchBox.setText("INVALID ID OR NAME");
@@ -245,14 +266,18 @@ public class SecondaryController {
 			
 		}
 		
+		//Bug testing. Prints current line to console.
 		for(int i=0; i < currentLine.length;i++) {
 			System.out.println(currentLine[i]);
 		}
 		
+		//Setting ID box and name box
 		idField.setText(currentLine[0]);
 		nameField.setText(currentLine[1]);
+		//Holds original name. Necessary for name editing.
 		currentPersonName = currentLine[1];
 		
+		//Handling hiding fields when search is a faculty member.
 		if (currentLine[2].compareTo("Faculty")==0)
 		{
 			gpaField.setText("FACULTY");
@@ -289,7 +314,7 @@ public class SecondaryController {
 			dropCourseFive.setVisible(false);
 			
 		}
-		else
+		else										//Each student is currently guaranteed to have at least three classes.
 		{
 			courseOne.setVisible(true);
 			courseOne.setText(currentLine[2]);
@@ -326,6 +351,7 @@ public class SecondaryController {
 			classList.add(currentLine[3]);
 			classList.add(currentLine[4]);
 			
+			//Four classes.
 			if (currentLine.length >= 6)
 			{
 				courseFour.setVisible(true);
@@ -341,6 +367,8 @@ public class SecondaryController {
 			{
 				courseFour.setVisible(false);
 			}
+			
+			//Five classes.
 			if (currentLine.length == 7)
 			{
 				courseFive.setVisible(true);
@@ -357,6 +385,8 @@ public class SecondaryController {
 				courseFive.setVisible(false);
 			}
 		}
+		
+		//Filling exam scores if classes exist.
 		if (!classList.isEmpty())
 		{
 			System.out.println(classList.size());
@@ -365,12 +395,24 @@ public class SecondaryController {
 		txtReader.close();
 	}
 	
+	/**
+	 * Fills exam score fields.
+	 * 
+	 * @param arr List of student's enrolled classes.
+	 * @param id Student's id, used for searching class files for student's scores.
+	 * @throws FileNotFoundException
+	 */
 	private void fillExamScores(ArrayList arr, String id) throws FileNotFoundException
 	{
 		scoresLabel.setVisible(true);
 		String line = null;
 		String[] currentLine = new String[6];
+		//Holds the average of each class's exam scores for calculating GPA.
 		ArrayList<Integer> grades = new ArrayList();
+		/*
+		 * Fills exam score fields based on enrolled courses. Switch utilizes fall through to minimize repeat code.
+		 * Each scanner is created based on text in arr.
+		 */
 		switch(arr.size())
 		{
 			case 5:
@@ -457,6 +499,12 @@ public class SecondaryController {
 		calculateGPA(grades);
 	}
 	
+	/**
+	 * Calculates student's GPA based on grades ArrayList from fillExamScores. GPA is 
+	 * not weighted based on credit hours. 
+	 * TODO: Call this function when exam scores are edited.
+	 * @param arr ArrayList of grades.
+	 */
 	private void calculateGPA(ArrayList<Integer> arr)
 	{
 		double gpa = 0;
@@ -476,6 +524,10 @@ public class SecondaryController {
 		gpaField.setText(Double.toString(gpa));
 	}
 
+	/**
+	 * Enables faculty to edit a student's name. Shows accept/cancel.
+	 * @param e
+	 */
 	@FXML
 	private void editPersonName(ActionEvent e)
 	{
@@ -489,6 +541,10 @@ public class SecondaryController {
 		else return;
 	}
 	
+	/**
+	 * Cancels student name editing. Hides accept/cancel.
+	 * @param e
+	 */
 	@FXML
 	private void cancelName(ActionEvent e)
 	{
@@ -498,35 +554,42 @@ public class SecondaryController {
 		nameField.setText(currentPersonName);
 	}
 	
+	/**
+	 * Finalizes name editing. Replaces name in student list text file.
+	 */
 	@FXML 
 	private void acceptName(ActionEvent e) throws IOException
 	{
+		//Only allowed if name field has input.
 		if (!nameField.getText().isEmpty()) {
 			Scanner txtReader = new Scanner(new File(FILENAME));
 			String line = "";
 			
-			
+			//Making a copy of original student list file.
 			while(txtReader.hasNext())
 			{
 				line += txtReader.nextLine() + "\r\n";
 			}
+			//Debugging - prints original copy.
 			System.out.println(line);
 			txtReader.close();
 			
-			
+			//Replacing old name with new name.
 			String newName = nameField.getText();
-			System.out.println(currentPersonName + " " + newName);
 			String replaced = line.replace("" + currentPersonName, "" + newName);
-			System.out.println(replaced);
 			FileWriter writer = new FileWriter(new File(FILENAME));
 			writer.write(replaced);
 			writer.close();
 		}
+		//Hiding hyperlinks after done editing.
 		nameField.setEditable(false);
 		acceptName.setVisible(false);	
 		cancelName.setVisible(false);
 		Scanner txtReader = new Scanner(new File(FILENAME));
 
+		/*Replacing currentPersonName with new name. nameField.getText() is a reference and 
+		 * therefore changes each time input is changed.
+		 */
 		while(txtReader.hasNext())
 		{
 			String line = txtReader.nextLine();
@@ -541,6 +604,12 @@ public class SecondaryController {
 			}
 		}
 	}
+	
+	/**
+	 * Hides database screen and shows new login screen.
+	 * @param e
+	 * @throws IOException
+	 */
     @FXML
     private void logoutButton(ActionEvent e) throws IOException {
     	logoutButton.getScene().getWindow().hide();
