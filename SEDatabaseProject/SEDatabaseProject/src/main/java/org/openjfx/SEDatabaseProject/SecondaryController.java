@@ -235,6 +235,11 @@ public class SecondaryController {
 				courseFiveTestThree.setVisible(false);
 				courseFiveTestFour.setVisible(false);
 				scoresLabel.setVisible(false);
+				dropCourseOne.setVisible(false);
+				dropCourseTwo.setVisible(false);
+				dropCourseThree.setVisible(false);
+				dropCourseFour.setVisible(false);
+				dropCourseFive.setVisible(false);
 				return;
 			}
 			
@@ -277,6 +282,12 @@ public class SecondaryController {
 			courseFiveTestThree.setVisible(false);
 			courseFiveTestFour.setVisible(false);
 			scoresLabel.setVisible(false);
+			dropCourseOne.setVisible(false);
+			dropCourseTwo.setVisible(false);
+			dropCourseThree.setVisible(false);
+			dropCourseFour.setVisible(false);
+			dropCourseFive.setVisible(false);
+			
 		}
 		else
 		{
@@ -309,6 +320,8 @@ public class SecondaryController {
 			dropCourseOne.setVisible(true);
 			dropCourseTwo.setVisible(true);
 			dropCourseThree.setVisible(true);
+			dropCourseFour.setVisible(false);
+			dropCourseFive.setVisible(false);
 			classList.add(currentLine[2]);
 			classList.add(currentLine[3]);
 			classList.add(currentLine[4]);
@@ -346,6 +359,7 @@ public class SecondaryController {
 		}
 		if (!classList.isEmpty())
 		{
+			System.out.println(classList.size());
 			fillExamScores(classList, idField.getText());
 		}
 		txtReader.close();
@@ -458,6 +472,7 @@ public class SecondaryController {
 				gpa += 1;			
 		}
 		gpa = gpa/arr.size();
+		gpa = Double.parseDouble(String.format("%.2f", gpa));
 		gpaField.setText(Double.toString(gpa));
 	}
 
