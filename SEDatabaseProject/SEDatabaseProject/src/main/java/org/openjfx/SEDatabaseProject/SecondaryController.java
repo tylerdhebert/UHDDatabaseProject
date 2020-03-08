@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -117,13 +118,37 @@ public class SecondaryController {
 	AnchorPane anchorPane = new AnchorPane();
 	@FXML 
 	Hyperlink logoutButton = new Hyperlink();
+	@FXML
+	Hyperlink acceptOne = new Hyperlink();
+	@FXML
+	Hyperlink acceptTwo = new Hyperlink();
+	@FXML
+	Hyperlink acceptThree = new Hyperlink();
+	@FXML
+	Hyperlink acceptFour = new Hyperlink();
+	@FXML
+	Hyperlink acceptFive = new Hyperlink();
+	@FXML
+	Hyperlink cancelOne = new Hyperlink();
+	@FXML
+	Hyperlink cancelTwo = new Hyperlink();
+	@FXML
+	Hyperlink cancelThree = new Hyperlink();
+	@FXML
+	Hyperlink cancelFour = new Hyperlink();
+	@FXML
+	Hyperlink cancelFive = new Hyperlink();
+	
+	Group studentGroup = new Group();
+	
 	
 	/**
 	 * Sets LOGGED IN AS: text.
 	 * @param e
+	 * @throws IOException 
 	 */
 	@FXML
-	private void setLoggedInAsLabel(MouseEvent e)
+	private void setLoggedInAsLabel(MouseEvent e) throws IOException
 	{
 		if (labelSet == false)
 		{
@@ -138,6 +163,11 @@ public class SecondaryController {
 	    		studentLabel.setVisible(true);
 	    		facultyLabel.setVisible(false);
 	    		labelSet = true;
+	    		searchBox.setText(App.username);
+	    		searchButton.setDisable(true);
+	    		fillFields(new ActionEvent());
+	    		searchBox.setEditable(false);
+	    		editName.setVisible(false);
 	    	}
 		}
 	}
@@ -277,6 +307,55 @@ public class SecondaryController {
 		//Holds original name. Necessary for name editing.
 		currentPersonName = currentLine[1];
 		
+		//Handling student with no enrolled classes.
+		if (currentLine.length == 2)
+		{
+			gpaField.setText("No enrolled courses.");
+			courseOne.setVisible(false);
+			courseTwo.setVisible(false);
+			courseThree.setVisible(false);
+			courseFour.setVisible(false);
+			courseFive.setVisible(false);
+			courseOneTestOne.setVisible(false);
+			courseOneTestTwo.setVisible(false);
+			courseOneTestThree.setVisible(false);
+			courseOneTestFour.setVisible(false);
+			courseTwoTestOne.setVisible(false);
+			courseTwoTestTwo.setVisible(false);
+			courseTwoTestThree.setVisible(false);
+			courseTwoTestFour.setVisible(false);
+			courseThreeTestOne.setVisible(false);
+			courseThreeTestTwo.setVisible(false);
+			courseThreeTestThree.setVisible(false);
+			courseThreeTestFour.setVisible(false);
+			courseFourTestOne.setVisible(false);
+			courseFourTestTwo.setVisible(false);
+			courseFourTestThree.setVisible(false);
+			courseFourTestFour.setVisible(false);
+			courseFiveTestOne.setVisible(false);
+			courseFiveTestTwo.setVisible(false);
+			courseFiveTestThree.setVisible(false);
+			courseFiveTestFour.setVisible(false);
+			scoresLabel.setVisible(false);
+			dropCourseOne.setVisible(false);
+			dropCourseTwo.setVisible(false);
+			dropCourseThree.setVisible(false);
+			dropCourseFour.setVisible(false);
+			dropCourseFive.setVisible(false);
+			acceptOne.setVisible(false);
+			cancelOne.setVisible(false);
+			acceptTwo.setVisible(false);
+			cancelTwo.setVisible(false);
+			acceptThree.setVisible(false);
+			cancelThree.setVisible(false);
+			acceptFour.setVisible(false);
+			cancelFour.setVisible(false);
+			acceptFive.setVisible(false);
+			cancelFive.setVisible(false);
+			return;
+			
+		}
+		
 		//Handling hiding fields when search is a faculty member.
 		if (currentLine[2].compareTo("Faculty")==0)
 		{
@@ -312,28 +391,35 @@ public class SecondaryController {
 			dropCourseThree.setVisible(false);
 			dropCourseFour.setVisible(false);
 			dropCourseFive.setVisible(false);
-			
+			acceptOne.setVisible(false);
+			cancelOne.setVisible(false);
+			acceptTwo.setVisible(false);
+			cancelTwo.setVisible(false);
+			acceptThree.setVisible(false);
+			cancelThree.setVisible(false);
+			acceptFour.setVisible(false);
+			cancelFour.setVisible(false);
+			acceptFive.setVisible(false);
+			cancelFive.setVisible(false);			
 		}
-		else										//Each student is currently guaranteed to have at least three classes.
+		
+		//One class
+		if (currentLine.length >= 3 && currentLine[2].compareTo("Faculty") != 0)
 		{
 			courseOne.setVisible(true);
 			courseOne.setText(currentLine[2]);
-			courseTwo.setVisible(true);
-			courseTwo.setText(currentLine[3]);
-			courseThree.setVisible(true);
-			courseThree.setText(currentLine[4]);
 			courseOneTestOne.setVisible(true);
 			courseOneTestTwo.setVisible(true);
 			courseOneTestThree.setVisible(true);
 			courseOneTestFour.setVisible(true);
-			courseTwoTestOne.setVisible(true);
-			courseTwoTestTwo.setVisible(true);
-			courseTwoTestThree.setVisible(true);
-			courseTwoTestFour.setVisible(true);
-			courseThreeTestOne.setVisible(true);
-			courseThreeTestTwo.setVisible(true);
-			courseThreeTestThree.setVisible(true);
-			courseThreeTestFour.setVisible(true);
+			courseTwoTestOne.setVisible(false);
+			courseTwoTestTwo.setVisible(false);
+			courseTwoTestThree.setVisible(false);
+			courseTwoTestFour.setVisible(false);
+			courseThreeTestOne.setVisible(false);
+			courseThreeTestTwo.setVisible(false);
+			courseThreeTestThree.setVisible(false);
+			courseThreeTestFour.setVisible(false);
 			courseFourTestOne.setVisible(false);
 			courseFourTestTwo.setVisible(false);
 			courseFourTestThree.setVisible(false);
@@ -343,47 +429,89 @@ public class SecondaryController {
 			courseFiveTestThree.setVisible(false);
 			courseFiveTestFour.setVisible(false);
 			dropCourseOne.setVisible(true);
-			dropCourseTwo.setVisible(true);
-			dropCourseThree.setVisible(true);
+			dropCourseTwo.setVisible(false);
+			dropCourseThree.setVisible(false);
 			dropCourseFour.setVisible(false);
 			dropCourseFive.setVisible(false);
 			classList.add(currentLine[2]);
+			acceptOne.setVisible(false);
+			cancelOne.setVisible(false);
+			acceptTwo.setVisible(false);
+			cancelTwo.setVisible(false);
+			acceptThree.setVisible(false);
+			cancelThree.setVisible(false);
+			acceptFour.setVisible(false);
+			cancelFour.setVisible(false);
+			acceptFive.setVisible(false);
+			cancelFive.setVisible(false);	
+		}
+		
+		//Two classes.
+		if (currentLine.length >= 4)
+		{
+			courseTwo.setVisible(true);
+			courseTwo.setText(currentLine[3]);
 			classList.add(currentLine[3]);
+			courseTwoTestOne.setVisible(true);
+			courseTwoTestTwo.setVisible(true);
+			courseTwoTestThree.setVisible(true);
+			courseTwoTestFour.setVisible(true);
+			dropCourseTwo.setVisible(true);
+		}
+		else
+		{
+			courseTwo.setVisible(false);
+		}
+			
+		//Three classes.
+		if (currentLine.length >= 5)
+		{
+			courseThree.setVisible(true);
+			courseThree.setText(currentLine[4]);
 			classList.add(currentLine[4]);
-			
-			//Four classes.
-			if (currentLine.length >= 6)
-			{
-				courseFour.setVisible(true);
-				courseFour.setText(currentLine[5]);
-				classList.add(currentLine[5]);
-				courseFourTestOne.setVisible(true);
-				courseFourTestTwo.setVisible(true);
-				courseFourTestThree.setVisible(true);
-				courseFourTestFour.setVisible(true);
-				dropCourseFour.setVisible(true);
-			}
-			else
-			{
-				courseFour.setVisible(false);
-			}
-			
-			//Five classes.
-			if (currentLine.length == 7)
-			{
-				courseFive.setVisible(true);
-				courseFive.setText(currentLine[6]);
-				classList.add(currentLine[6]);
-				courseFiveTestOne.setVisible(true);
-				courseFiveTestTwo.setVisible(true);
-				courseFiveTestThree.setVisible(true);
-				courseFiveTestFour.setVisible(true);
-				dropCourseFive.setVisible(true);
-			}
-			else
-			{
-				courseFive.setVisible(false);
-			}
+			courseThreeTestOne.setVisible(true);
+			courseThreeTestTwo.setVisible(true);
+			courseThreeTestThree.setVisible(true);
+			courseThreeTestFour.setVisible(true);
+			dropCourseThree.setVisible(true);
+		}
+		else
+		{
+			courseThree.setVisible(false);
+		}
+		
+		//Four classes.
+		if (currentLine.length >= 6)
+		{
+			courseFour.setVisible(true);
+			courseFour.setText(currentLine[5]);
+			classList.add(currentLine[5]);
+			courseFourTestOne.setVisible(true);
+			courseFourTestTwo.setVisible(true);
+			courseFourTestThree.setVisible(true);
+			courseFourTestFour.setVisible(true);
+			dropCourseFour.setVisible(true);
+		}
+		else
+		{
+			courseFour.setVisible(false);
+		}
+		
+		//Five classes.
+		if (currentLine.length == 7)
+		{
+			courseFive.setVisible(true);
+			courseFive.setText(currentLine[6]);
+			classList.add(currentLine[6]);
+			courseFiveTestOne.setVisible(true);
+			courseFiveTestTwo.setVisible(true);
+			courseFiveTestThree.setVisible(true);
+			courseFiveTestFour.setVisible(true);
+			dropCourseFive.setVisible(true);
+		}
+		else
+		{
+			courseFive.setVisible(false);
 		}
 		
 		//Filling exam scores if classes exist.
@@ -402,13 +530,13 @@ public class SecondaryController {
 	 * @param id Student's id, used for searching class files for student's scores.
 	 * @throws FileNotFoundException
 	 */
-	private void fillExamScores(ArrayList arr, String id) throws FileNotFoundException
+	private void fillExamScores(ArrayList<String> arr, String id) throws FileNotFoundException
 	{
 		scoresLabel.setVisible(true);
 		String line = null;
 		String[] currentLine = new String[6];
 		//Holds the average of each class's exam scores for calculating GPA.
-		ArrayList<Integer> grades = new ArrayList();
+		ArrayList<Integer> grades = new ArrayList<Integer>();
 		/*
 		 * Fills exam score fields based on enrolled courses. Switch utilizes fall through to minimize repeat code.
 		 * Each scanner is created based on text in arr.
@@ -614,5 +742,544 @@ public class SecondaryController {
     private void logoutButton(ActionEvent e) throws IOException {
     	logoutButton.getScene().getWindow().hide();
         App.showLoginScreen();
+    }
+    
+    /**
+     * Enables accept and cancel buttons for dropping course one. Only works
+     * if another drop is not already enabled.
+     * @param e
+     */
+    @FXML
+    private void dropOnePressed(ActionEvent e)
+    {
+    	if (!acceptTwo.isVisible() && !acceptThree.isVisible() 
+    			&& !acceptFour.isVisible() && !acceptFive.isVisible())
+    	{
+    		acceptOne.setVisible(true);
+    		cancelOne.setVisible(true);
+    	}
+    }
+    
+    /**
+     * Enables accept and cancel buttons for dropping course two. Only works
+     * if another drop is not already enabled.
+     * @param e
+     */
+    @FXML
+    private void dropTwoPressed(ActionEvent e)
+    {
+    	if (!acceptOne.isVisible() && !acceptThree.isVisible() 
+    			&& !acceptFour.isVisible() && !acceptFive.isVisible())
+    	{
+    		acceptTwo.setVisible(true);
+    		cancelTwo.setVisible(true);
+    	}
+    }
+    
+    /**
+     * Enables accept and cancel buttons for dropping course three. Only works
+     * if another drop is not already enabled.
+     * @param e
+     */
+    @FXML
+    private void dropThreePressed(ActionEvent e)
+    {
+    	if (!acceptTwo.isVisible() && !acceptOne.isVisible() 
+    			&& !acceptFour.isVisible() && !acceptFive.isVisible())
+    	{
+    		acceptThree.setVisible(true);
+    		cancelThree.setVisible(true);
+    	}
+    }
+    
+    /**
+     * Enables accept and cancel buttons for dropping course four. Only works
+     * if another drop is not already enabled.
+     * @param e
+     */
+    @FXML
+    private void dropFourPressed(ActionEvent e)
+    {
+    	if (!acceptTwo.isVisible() && !acceptThree.isVisible() 
+    			&& !acceptOne.isVisible() && !acceptFive.isVisible())
+    	{
+    		acceptFour.setVisible(true);
+    		cancelFour.setVisible(true);
+    	}
+    }
+    
+    /**
+     * Enables accept and cancel buttons for dropping course five. Only works
+     * if another drop is not already enabled.
+     * @param e
+     */
+    @FXML
+    private void dropFivePressed(ActionEvent e)
+    {
+    	if (!acceptTwo.isVisible() && !acceptThree.isVisible() 
+    			&& !acceptFour.isVisible() && !acceptOne.isVisible())
+    	{
+    		acceptFive.setVisible(true);
+    		cancelFive.setVisible(true);
+    	}
+    }
+    
+    /**
+     * Disables all accept and cancel drop buttons. Same function for every cancel button.
+     * @param e
+     */
+    @FXML
+    private void cancelDropPressed(ActionEvent e)
+    {
+    	acceptOne.setVisible(false);
+    	cancelOne.setVisible(false);
+    	acceptTwo.setVisible(false);
+    	cancelTwo.setVisible(false);
+    	acceptThree.setVisible(false);
+    	cancelThree.setVisible(false);
+    	acceptFour.setVisible(false);
+    	cancelFour.setVisible(false);
+    	acceptFive.setVisible(false);
+    	cancelFive.setVisible(false);
+    }
+    
+    /**
+     * Drops current student from course one. Edits peopleList and course txt file.
+     * @param e
+     * @throws IOException
+     */
+    @FXML
+    private void acceptOnePressed(ActionEvent e) throws IOException
+    {
+    	//Original text file
+    	String oldPeopleList = "";
+    	//Will hold correct line to replace
+    	String studentLineInPeopleList = "";
+    	//Will hold edited line with new course list
+    	String newStudentLine = "";
+    	//Holds name of course to drop
+    	String dropClass = courseOne.getText();
+    	//Scanner to read course text file
+    	Scanner editClass = new Scanner(new File("src\\main\\resources\\images\\" + dropClass + ".txt"));
+    	//Scanner to read peopleList
+    	Scanner editPeopleList = new Scanner(new File(FILENAME));
+    	
+    	//Reading peopleList/building old String/finding correct line to edit
+    	while (editPeopleList.hasNextLine())
+    	{
+    		String currentLine = editPeopleList.nextLine();
+    		oldPeopleList += currentLine + "\r\n";
+    		String[] tempLine = currentLine.split("-|\\.");
+    		if (idField.getText().compareTo(tempLine[0]) == 0)
+    		{
+    			studentLineInPeopleList = currentLine;
+    		}
+    	}
+    	
+    	//Closing file before editing.
+    	editPeopleList.close();
+    	
+    	//Splitting correct line by delimiter
+    	String[] studentLine = studentLineInPeopleList.split("-|\\.");
+    	
+    	//Finding course to drop in student's line and replacing with empty string
+    	for (int i = 0; i < studentLine.length; i++)
+    	{
+    		if (studentLine[i].compareTo(dropClass) == 0)
+    		{
+    			studentLine[i] = "";
+    		}
+    		//Putting string back together and adding delimiter
+    		if (studentLine[i].compareTo("") != 0)
+    		{
+    			newStudentLine += studentLine[i] + "-";
+    		}
+    	}
+    	//Swapping old student line with new student line
+    	oldPeopleList = oldPeopleList.replace(studentLineInPeopleList, newStudentLine);
+    	FileWriter writer = new FileWriter(new File(FILENAME));
+    	//Writing new peopleList to peopleList.txt
+    	writer.write(oldPeopleList);
+    	writer.close();
+    	//Refilling the fields with updated info
+    	fillFields(e);
+    	
+    	//Editing class txt file
+    	String currentClassLine = "";
+    	String oldClassFile = "";
+    	//Will hold correct line 
+    	String studentLineInClassFile = "";
+    	while(editClass.hasNextLine())
+    	{
+    		currentClassLine = editClass.nextLine();
+    		oldClassFile += currentClassLine + "\r\n";
+    		String[] tempLine = currentClassLine.split("-");
+    		
+    		//Setting correct line when ID is found
+   			if (tempLine[0].compareTo(idField.getText()) == 0)
+   			{
+   				studentLineInClassFile = currentClassLine;
+   			}
+   		}    		
+    	//Replacing old line with empty String. Removes line breaks as well
+    	oldClassFile = oldClassFile.replace(studentLineInClassFile + "\r\n", "");
+    	editClass.close();
+    	
+    	//Writing new class text file
+    	FileWriter classWriter = new FileWriter(new File("src\\main\\resources\\images\\" + dropClass + ".txt"));
+    	classWriter.write(oldClassFile);
+    	classWriter.close();
+   	}
+    
+    /**
+     * Drops current student from course two. Edits peopleList and course txt file.
+     * @param e
+     * @throws IOException
+     */
+    @FXML
+    private void acceptTwoPressed(ActionEvent e) throws IOException
+    {
+    	//Original text file
+    	String oldPeopleList = "";
+    	//Will hold correct line to replace
+    	String studentLineInPeopleList = "";
+    	//Will hold edited line with new course list
+    	String newStudentLine = "";
+    	//Holds name of course to drop
+    	String dropClass = courseTwo.getText();
+    	//Scanner to read course text file
+    	Scanner editClass = new Scanner(new File("src\\main\\resources\\images\\" + dropClass + ".txt"));
+    	//Scanner to read peopleList
+    	Scanner editPeopleList = new Scanner(new File(FILENAME));
+    	
+    	//Reading peopleList/building old String/finding correct line to edit
+    	while (editPeopleList.hasNextLine())
+    	{
+    		String currentLine = editPeopleList.nextLine();
+    		oldPeopleList += currentLine + "\r\n";
+    		String[] tempLine = currentLine.split("-|\\.");
+    		if (idField.getText().compareTo(tempLine[0]) == 0)
+    		{
+    			studentLineInPeopleList = currentLine;
+    		}
+    	}
+    	
+    	//Closing file before editing.
+    	editPeopleList.close();
+    	
+    	//Splitting correct line by delimiter
+    	String[] studentLine = studentLineInPeopleList.split("-|\\.");
+    	
+    	//Finding course to drop in student's line and replacing with empty string
+    	for (int i = 0; i < studentLine.length; i++)
+    	{
+    		if (studentLine[i].compareTo(dropClass) == 0)
+    		{
+    			studentLine[i] = "";
+    		}
+    		//Putting string back together and adding delimiter
+    		if (studentLine[i].compareTo("") != 0)
+    		{
+    			newStudentLine += studentLine[i] + "-";
+    		}
+    	}
+    	//Swapping old student line with new student line
+    	oldPeopleList = oldPeopleList.replace(studentLineInPeopleList, newStudentLine);
+    	FileWriter writer = new FileWriter(new File(FILENAME));
+    	//Writing new peopleList to peopleList.txt
+    	writer.write(oldPeopleList);
+    	writer.close();
+    	//Refilling the fields with updated info
+    	fillFields(e);
+    	
+    	//Editing class txt file
+    	String currentClassLine = "";
+    	String oldClassFile = "";
+    	//Will hold correct line 
+    	String studentLineInClassFile = "";
+    	while(editClass.hasNextLine())
+    	{
+    		currentClassLine = editClass.nextLine();
+    		oldClassFile += currentClassLine + "\r\n";
+    		String[] tempLine = currentClassLine.split("-");
+    		
+    		//Setting correct line when ID is found
+   			if (tempLine[0].compareTo(idField.getText()) == 0)
+   			{
+   				studentLineInClassFile = currentClassLine;
+   			}
+   		}    		
+    	//Replacing old line with empty String. Removes line breaks as well
+    	oldClassFile = oldClassFile.replace(studentLineInClassFile + "\r\n", "");
+    	editClass.close();
+    	
+    	//Writing new class text file
+    	FileWriter classWriter = new FileWriter(new File("src\\main\\resources\\images\\" + dropClass + ".txt"));
+    	classWriter.write(oldClassFile);
+    	classWriter.close();
+    }
+    
+    /**
+     * Drops current student from course three. Edits peopleList and course txt file.
+     * @param e
+     * @throws IOException
+     */
+    @FXML
+    private void acceptThreePressed(ActionEvent e) throws IOException
+    {
+    	//Original text file
+    	String oldPeopleList = "";
+    	//Will hold correct line to replace
+    	String studentLineInPeopleList = "";
+    	//Will hold edited line with new course list
+    	String newStudentLine = "";
+    	//Holds name of course to drop
+    	String dropClass = courseThree.getText();
+    	//Scanner to read course text file
+    	Scanner editClass = new Scanner(new File("src\\main\\resources\\images\\" + dropClass + ".txt"));
+    	//Scanner to read peopleList
+    	Scanner editPeopleList = new Scanner(new File(FILENAME));
+    	
+    	//Reading peopleList/building old String/finding correct line to edit
+    	while (editPeopleList.hasNextLine())
+    	{
+    		String currentLine = editPeopleList.nextLine();
+    		oldPeopleList += currentLine + "\r\n";
+    		String[] tempLine = currentLine.split("-|\\.");
+    		if (idField.getText().compareTo(tempLine[0]) == 0)
+    		{
+    			studentLineInPeopleList = currentLine;
+    		}
+    	}
+    	
+    	//Closing file before editing.
+    	editPeopleList.close();
+    	
+    	//Splitting correct line by delimiter
+    	String[] studentLine = studentLineInPeopleList.split("-|\\.");
+    	
+    	//Finding course to drop in student's line and replacing with empty string
+    	for (int i = 0; i < studentLine.length; i++)
+    	{
+    		if (studentLine[i].compareTo(dropClass) == 0)
+    		{
+    			studentLine[i] = "";
+    		}
+    		//Putting string back together and adding delimiter
+    		if (studentLine[i].compareTo("") != 0)
+    		{
+    			newStudentLine += studentLine[i] + "-";
+    		}
+    	}
+    	//Swapping old student line with new student line
+    	oldPeopleList = oldPeopleList.replace(studentLineInPeopleList, newStudentLine);
+    	FileWriter writer = new FileWriter(new File(FILENAME));
+    	//Writing new peopleList to peopleList.txt
+    	writer.write(oldPeopleList);
+    	writer.close();
+    	//Refilling the fields with updated info
+    	fillFields(e);
+    	
+    	//Editing class txt file
+    	String currentClassLine = "";
+    	String oldClassFile = "";
+    	//Will hold correct line 
+    	String studentLineInClassFile = "";
+    	while(editClass.hasNextLine())
+    	{
+    		currentClassLine = editClass.nextLine();
+    		oldClassFile += currentClassLine + "\r\n";
+    		String[] tempLine = currentClassLine.split("-");
+    		
+    		//Setting correct line when ID is found
+   			if (tempLine[0].compareTo(idField.getText()) == 0)
+   			{
+   				studentLineInClassFile = currentClassLine;
+   			}
+   		}    		
+    	//Replacing old line with empty String. Removes line breaks as well
+    	oldClassFile = oldClassFile.replace(studentLineInClassFile + "\r\n", "");
+    	editClass.close();
+    	
+    	//Writing new class text file
+    	FileWriter classWriter = new FileWriter(new File("src\\main\\resources\\images\\" + dropClass + ".txt"));
+    	classWriter.write(oldClassFile);
+    	classWriter.close();
+    }
+    
+    /**
+     * Drops current student from course four. Edits peopleList and course txt file.
+     * @param e
+     * @throws IOException
+     */
+    @FXML
+    private void acceptFourPressed(ActionEvent e) throws IOException
+    {
+    	//Original text file
+    	String oldPeopleList = "";
+    	//Will hold correct line to replace
+    	String studentLineInPeopleList = "";
+    	//Will hold edited line with new course list
+    	String newStudentLine = "";
+    	//Holds name of course to drop
+    	String dropClass = courseFour.getText();
+    	//Scanner to read course text file
+    	Scanner editClass = new Scanner(new File("src\\main\\resources\\images\\" + dropClass + ".txt"));
+    	//Scanner to read peopleList
+    	Scanner editPeopleList = new Scanner(new File(FILENAME));
+    	
+    	//Reading peopleList/building old String/finding correct line to edit
+    	while (editPeopleList.hasNextLine())
+    	{
+    		String currentLine = editPeopleList.nextLine();
+    		oldPeopleList += currentLine + "\r\n";
+    		String[] tempLine = currentLine.split("-|\\.");
+    		if (idField.getText().compareTo(tempLine[0]) == 0)
+    		{
+    			studentLineInPeopleList = currentLine;
+    		}
+    	}
+    	
+    	//Closing file before editing.
+    	editPeopleList.close();
+    	
+    	//Splitting correct line by delimiter
+    	String[] studentLine = studentLineInPeopleList.split("-|\\.");
+    	
+    	//Finding course to drop in student's line and replacing with empty string
+    	for (int i = 0; i < studentLine.length; i++)
+    	{
+    		if (studentLine[i].compareTo(dropClass) == 0)
+    		{
+    			studentLine[i] = "";
+    		}
+    		//Putting string back together and adding delimiter
+    		if (studentLine[i].compareTo("") != 0)
+    		{
+    			newStudentLine += studentLine[i] + "-";
+    		}
+    	}
+    	//Swapping old student line with new student line
+    	oldPeopleList = oldPeopleList.replace(studentLineInPeopleList, newStudentLine);
+    	FileWriter writer = new FileWriter(new File(FILENAME));
+    	//Writing new peopleList to peopleList.txt
+    	writer.write(oldPeopleList);
+    	writer.close();
+    	//Refilling the fields with updated info
+    	fillFields(e);
+    	
+    	//Editing class txt file
+    	String currentClassLine = "";
+    	String oldClassFile = "";
+    	//Will hold correct line 
+    	String studentLineInClassFile = "";
+    	while(editClass.hasNextLine())
+    	{
+    		currentClassLine = editClass.nextLine();
+    		oldClassFile += currentClassLine + "\r\n";
+    		String[] tempLine = currentClassLine.split("-");
+    		
+    		//Setting correct line when ID is found
+   			if (tempLine[0].compareTo(idField.getText()) == 0)
+   			{
+   				studentLineInClassFile = currentClassLine;
+   			}
+   		}    		
+    	//Replacing old line with empty String. Removes line breaks as well
+    	oldClassFile = oldClassFile.replace(studentLineInClassFile + "\r\n", "");
+    	editClass.close();
+    	
+    	//Writing new class text file
+    	FileWriter classWriter = new FileWriter(new File("src\\main\\resources\\images\\" + dropClass + ".txt"));
+    	classWriter.write(oldClassFile);
+    	classWriter.close();
+    }
+    
+    /**
+     * Drops current student from course five. Edits peopleList and course txt file.
+     * @param e
+     * @throws IOException
+     */
+    @FXML
+    private void acceptFivePressed(ActionEvent e) throws IOException
+    {
+    	//Original text file
+    	String oldPeopleList = "";
+    	//Will hold correct line to replace
+    	String studentLineInPeopleList = "";
+    	//Will hold edited line with new course list
+    	String newStudentLine = "";
+    	//Holds name of course to drop
+    	String dropClass = courseFive.getText();
+    	//Scanner to read course text file
+    	Scanner editClass = new Scanner(new File("src\\main\\resources\\images\\" + dropClass + ".txt"));
+    	//Scanner to read peopleList
+    	Scanner editPeopleList = new Scanner(new File(FILENAME));
+    	
+    	//Reading peopleList/building old String/finding correct line to edit
+    	while (editPeopleList.hasNextLine())
+    	{
+    		String currentLine = editPeopleList.nextLine();
+    		oldPeopleList += currentLine + "\r\n";
+    		String[] tempLine = currentLine.split("-|\\.");
+    		if (idField.getText().compareTo(tempLine[0]) == 0)
+    		{
+    			studentLineInPeopleList = currentLine;
+    		}
+    	}
+    	
+    	//Closing file before editing.
+    	editPeopleList.close();
+    	
+    	//Splitting correct line by delimiter
+    	String[] studentLine = studentLineInPeopleList.split("-|\\.");
+    	
+    	//Finding course to drop in student's line and replacing with empty string
+    	for (int i = 0; i < studentLine.length; i++)
+    	{
+    		if (studentLine[i].compareTo(dropClass) == 0)
+    		{
+    			studentLine[i] = "";
+    		}
+    		//Putting string back together and adding delimiter
+    		if (studentLine[i].compareTo("") != 0)
+    		{
+    			newStudentLine += studentLine[i] + "-";
+    		}
+    	}
+    	//Swapping old student line with new student line
+    	oldPeopleList = oldPeopleList.replace(studentLineInPeopleList, newStudentLine);
+    	FileWriter writer = new FileWriter(new File(FILENAME));
+    	//Writing new peopleList to peopleList.txt
+    	writer.write(oldPeopleList);
+    	writer.close();
+    	//Refilling the fields with updated info
+    	fillFields(e);
+    	
+    	//Editing class txt file
+    	String currentClassLine = "";
+    	String oldClassFile = "";
+    	//Will hold correct line 
+    	String studentLineInClassFile = "";
+    	while(editClass.hasNextLine())
+    	{
+    		currentClassLine = editClass.nextLine();
+    		oldClassFile += currentClassLine + "\r\n";
+    		String[] tempLine = currentClassLine.split("-");
+    		
+    		//Setting correct line when ID is found
+   			if (tempLine[0].compareTo(idField.getText()) == 0)
+   			{
+   				studentLineInClassFile = currentClassLine;
+   			}
+   		}    		
+    	//Replacing old line with empty String. Removes line breaks as well
+    	oldClassFile = oldClassFile.replace(studentLineInClassFile + "\r\n", "");
+    	editClass.close();
+    	
+    	//Writing new class text file
+    	FileWriter classWriter = new FileWriter(new File("src\\main\\resources\\images\\" + dropClass + ".txt"));
+    	classWriter.write(oldClassFile);
+    	classWriter.close();
     }
 }

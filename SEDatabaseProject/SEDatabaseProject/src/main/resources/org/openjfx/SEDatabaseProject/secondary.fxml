@@ -10,21 +10,21 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#setLoggedInAsLabel" prefHeight="629.0" prefWidth="769.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.SEDatabaseProject.SecondaryController">
    <children>
-      <TextField fx:id="courseOne" editable="false" focusTraversable="false" layoutX="160.0" layoutY="165.0" prefHeight="49.0" prefWidth="149.0" promptText="Enrolled course" visible="false" />
+      <TextField fx:id="courseOne" editable="false" focusTraversable="false" layoutX="160.0" layoutY="165.0" prefHeight="49.0" prefWidth="149.0" promptText="Enrolled course" />
       <TextField fx:id="searchBox" layoutX="48.0" layoutY="36.0" prefHeight="25.0" prefWidth="165.0" promptText="Enter student ID or name..." />
       <Button fx:id="searchButton" layoutX="231.0" layoutY="36.0" mnemonicParsing="false" onAction="#fillFields" text="Search" />
       <TextField fx:id="nameField" editable="false" focusTraversable="false" layoutX="157.0" layoutY="113.0" promptText="Student Name" />
       <TextField fx:id="idField" editable="false" focusTraversable="false" layoutX="348.0" layoutY="113.0" promptText="Student ID" />
       <Hyperlink fx:id="editName" layoutX="157.0" layoutY="138.0" onAction="#editPersonName" text="Edit" />
-      <TextField fx:id="courseTwo" editable="false" focusTraversable="false" layoutX="160.0" layoutY="240.0" prefHeight="49.0" prefWidth="149.0" promptText="Enrolled course" visible="false" />
-      <TextField fx:id="courseThree" editable="false" focusTraversable="false" layoutX="160.0" layoutY="315.0" prefHeight="49.0" prefWidth="149.0" promptText="Enrolled course" visible="false" />
-      <TextField fx:id="courseFour" editable="false" focusTraversable="false" layoutX="160.0" layoutY="390.0" prefHeight="49.0" prefWidth="149.0" promptText="Enrolled course" visible="false" />
-      <TextField fx:id="courseFive" editable="false" focusTraversable="false" layoutX="160.0" layoutY="465.0" prefHeight="49.0" prefWidth="149.0" promptText="Enrolled course" visible="false" />
-      <Hyperlink fx:id="dropCourseTwo" focusTraversable="false" layoutX="247.0" layoutY="289.0" text="Drop" visible="false" />
-      <Hyperlink fx:id="dropCourseOne" focusTraversable="false" layoutX="247.0" layoutY="214.0" text="Drop" visible="false" />
-      <Hyperlink fx:id="dropCourseThree" focusTraversable="false" layoutX="247.0" layoutY="364.0" text="Drop" visible="false" />
-      <Hyperlink fx:id="dropCourseFour" focusTraversable="false" layoutX="247.0" layoutY="439.0" text="Drop" visible="false" />
-      <Hyperlink fx:id="dropCourseFive" focusTraversable="false" layoutX="247.0" layoutY="514.0" text="Drop" visible="false" />
+      <TextField fx:id="courseTwo" editable="false" focusTraversable="false" layoutX="160.0" layoutY="240.0" prefHeight="49.0" prefWidth="149.0" promptText="Enrolled course" />
+      <TextField fx:id="courseThree" editable="false" focusTraversable="false" layoutX="160.0" layoutY="315.0" prefHeight="49.0" prefWidth="149.0" promptText="Enrolled course" />
+      <TextField fx:id="courseFour" editable="false" focusTraversable="false" layoutX="160.0" layoutY="390.0" prefHeight="49.0" prefWidth="149.0" promptText="Enrolled course" />
+      <TextField fx:id="courseFive" editable="false" focusTraversable="false" layoutX="160.0" layoutY="465.0" prefHeight="49.0" prefWidth="149.0" promptText="Enrolled course" />
+      <Hyperlink fx:id="dropCourseTwo" focusTraversable="false" layoutX="165.0" layoutY="289.0" onAction="#dropTwoPressed" text="Drop" visible="false" />
+      <Hyperlink fx:id="dropCourseOne" focusTraversable="false" layoutX="165.0" layoutY="214.0" onAction="#dropOnePressed" text="Drop" visible="false" />
+      <Hyperlink fx:id="dropCourseThree" focusTraversable="false" layoutX="165.0" layoutY="364.0" onAction="#dropThreePressed" text="Drop" visible="false" />
+      <Hyperlink fx:id="dropCourseFour" focusTraversable="false" layoutX="165.0" layoutY="439.0" onAction="#dropFourPressed" text="Drop" visible="false" />
+      <Hyperlink fx:id="dropCourseFive" focusTraversable="false" layoutX="165.0" layoutY="514.0" onAction="#dropFivePressed" text="Drop" visible="false" />
       <TextField fx:id="courseOneTestOne" editable="false" focusTraversable="false" layoutX="348.0" layoutY="161.0" prefHeight="25.0" prefWidth="52.0" visible="false" />
       <TextField fx:id="courseOneTestTwo" editable="false" focusTraversable="false" layoutX="403.0" layoutY="161.0" prefHeight="25.0" prefWidth="52.0" visible="false" />
       <TextField fx:id="courseOneTestThree" editable="false" focusTraversable="false" layoutX="348.0" layoutY="190.0" prefHeight="25.0" prefWidth="52.0" visible="false" />
@@ -61,5 +61,15 @@
       <Label fx:id="facultyLabel" layoutX="322.0" layoutY="14.0" text="FACULTY" textFill="#26dd11" visible="false" />
       <Label fx:id="studentLabel" layoutX="322.0" layoutY="14.0" text="STUDENT" textFill="BLUE" visible="false" />
       <Hyperlink fx:id="logoutButton" layoutX="19.0" layoutY="592.0" onAction="#logoutButton" text="Logout" />
+      <Hyperlink fx:id="cancelOne" layoutX="266.0" layoutY="214.0" onAction="#cancelDropPressed" text="Cancel" visible="false" />
+      <Hyperlink fx:id="acceptOne" layoutX="218.0" layoutY="214.0" onAction="#acceptOnePressed" text="Accept" visible="false" />
+      <Hyperlink fx:id="acceptTwo" layoutX="218.0" layoutY="289.0" onAction="#acceptTwoPressed" text="Accept" visible="false" />
+      <Hyperlink fx:id="acceptThree" layoutX="218.0" layoutY="364.0" onAction="#acceptThreePressed" text="Accept" visible="false" />
+      <Hyperlink fx:id="cancelTwo" layoutX="266.0" layoutY="289.0" onAction="#cancelDropPressed" text="Cancel" visible="false" />
+      <Hyperlink fx:id="cancelThree" layoutX="266.0" layoutY="364.0" onAction="#cancelDropPressed" text="Cancel" visible="false" />
+      <Hyperlink fx:id="acceptFour" layoutX="218.0" layoutY="439.0" onAction="#acceptFourPressed" text="Accept" visible="false" />
+      <Hyperlink fx:id="cancelFour" layoutX="266.0" layoutY="439.0" onAction="#cancelDropPressed" text="Cancel" visible="false" />
+      <Hyperlink fx:id="acceptFive" layoutX="218.0" layoutY="514.0" onAction="#acceptFivePressed" text="Accept" visible="false" />
+      <Hyperlink fx:id="cancelFive" layoutX="266.0" layoutY="514.0" onAction="#cancelDropPressed" text="Cancel" visible="false" />
    </children>
 </AnchorPane>
