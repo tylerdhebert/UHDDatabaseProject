@@ -138,8 +138,8 @@ public class SecondaryController {
 	Hyperlink cancelFour = new Hyperlink();
 	@FXML
 	Hyperlink cancelFive = new Hyperlink();
-	
-	Group studentGroup = new Group();
+	@FXML
+	Button addCourseButton = new Button();
 	
 	
 	/**
@@ -181,6 +181,7 @@ public class SecondaryController {
 	@FXML
 	private void fillFields(ActionEvent e) throws IOException
 	{
+		editName.setVisible(true);
 		String desiredID = searchBox.getText();
 		Scanner txtReader = new Scanner(new File(FILENAME));
 		//Holds list of student's classes.
@@ -250,6 +251,12 @@ public class SecondaryController {
 				courseFiveTestThree.setVisible(false);
 				courseFiveTestFour.setVisible(false);
 				scoresLabel.setVisible(false);
+				editName.setVisible(false);
+				dropCourseOne.setVisible(false);
+				dropCourseTwo.setVisible(false);
+				dropCourseThree.setVisible(false);
+				dropCourseFour.setVisible(false);
+				dropCourseFive.setVisible(false);
 				return;
 			}
 			
@@ -291,6 +298,7 @@ public class SecondaryController {
 				dropCourseThree.setVisible(false);
 				dropCourseFour.setVisible(false);
 				dropCourseFive.setVisible(false);
+				editName.setVisible(false);
 				return;
 			}
 			
