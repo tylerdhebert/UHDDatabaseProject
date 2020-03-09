@@ -1,20 +1,15 @@
 package org.openjfx.SEDatabaseProject;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -138,8 +133,6 @@ public class SecondaryController {
 	Hyperlink cancelFour = new Hyperlink();
 	@FXML
 	Hyperlink cancelFive = new Hyperlink();
-	@FXML
-	Button addCourseButton = new Button();
 	
 	
 	/**
@@ -185,7 +178,7 @@ public class SecondaryController {
 		String desiredID = searchBox.getText();
 		Scanner txtReader = new Scanner(new File(FILENAME));
 		//Holds list of student's classes.
-		ArrayList<String> classList = new ArrayList();
+		ArrayList<String> classList = new ArrayList<String>();
 		Boolean isID;
 		
 		//Checking whether input is numerical.
